@@ -21,7 +21,7 @@ services:
     volumes:
       - ./app:/app/app
     ports:
-      - "8001:8000"
+      - "8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-traffic}:${POSTGRES_PASSWORD:-traffic}@db:5432/${POSTGRES_DB:-traffic}
     depends_on:
