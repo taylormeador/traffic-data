@@ -1,6 +1,6 @@
-import io
 import json
 import logging
+import os
 
 import pandas as pd
 import requests
@@ -16,9 +16,19 @@ logger = logging.getLogger(__name__)
 
 
 def _fetch_parquet(url: str) -> pd.DataFrame:
-    response = requests.get(url, timeout=60)
-    response.raise_for_status()
-    return pd.read_parquet(io.BytesIO(response.content))
+    os.makedirs(settings.raw_data_dir, exist_ok=True)
+    local_path = os.path.join(settings.raw_data_dir, os.path.basename(url))
+
+    if not os.path.exists(local_path):
+        logger.info("Landing raw file: %s -> %s", url, local_path)
+        response = requests.get(url, timeout=60)
+        response.raise_for_status()
+        with open(local_path, "wb") as f:
+            f.write(response.content)
+    else:
+        logger.info("Using already-landed raw file: %s", local_path)
+
+    return pd.read_parquet(local_path)
 
 
 def _to_wkt_element(geo_json: str) -> WKTElement:
