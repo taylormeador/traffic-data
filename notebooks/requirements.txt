@@ -1,0 +1,11 @@
+requests==2.34.2
+pandas==2.3.3
+geopandas==1.1.4
+mapboxgl==0.10.2
+shapely==2.1.2
+jupyter==1.1.1
+nbconvert==7.17.1
+# mapboxgl 0.10.2 (last released ~2020) imports `display` from IPython.core.display, a
+# path IPython 9.x removed. Pin below 9 so the import still works (with a deprecation
+# warning, not an error) until mapboxgl is updated or replaced.
+ipython<9
