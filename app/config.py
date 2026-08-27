@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -10,8 +10,6 @@ class Settings(BaseSettings):
         "https://cdn.urbansdk.com/data-engineering-interview/duval_jan1_2024.parquet.gz"
     )
     raw_data_dir: str = "/app/data/raw"
-
-    model_config = SettingsConfigDict(env_file=".env")
 
 
 settings = Settings()
